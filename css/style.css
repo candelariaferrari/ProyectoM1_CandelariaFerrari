@@ -1,0 +1,196 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Colores */
+  --bg: #0d0d0f;
+  --surface: #17171a;
+  --border: #2a2a30;
+  --accent: #c8f135;
+  --accent-dim: #a0c020;
+  --text: #f0f0f0;
+  --muted: #6b6b78;
+
+  /* border */
+  --border-s: 5px;
+  --border-m: 10px;
+  --border-l: 15px;
+
+  /* padding / margin */
+  --none: 0em;
+  --smal: 1em;
+  --large: 1.5em;
+  --xlarge: 2em;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  margin: var(--none);
+  padding: var(--none);
+  font-family: 'Syne', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+header {
+  padding: var(--xlarge);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+
+  span {
+    color: var(--accent);
+
+  }
+}
+
+main {
+  flex: 1;
+  /* ocupa todo el espacio disponible del heigth*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container-cards {
+  flex: 1;
+}
+
+.sidebar {
+  width: 22%;
+  padding: var(--xlarge);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-group,
+.size-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0rem 2rem;
+}
+fieldset{
+  border: var(--none);
+}
+/* Ocultás el input SIN usar display:none (display:none lo saca del foco del teclado, mal para accesibilidad) */
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Estilizás el label como botón apagado */
+.toggle-group label,
+.size-group label {
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  font-size: .9rem;
+  transition: all .15s;
+}
+
+/* Cuando el radio está seleccionado, estilizás su label */
+input[type="radio"]:checked+label,
+/* si label va DESPUÉS del input */
+label:has(input[type="radio"]:checked)
+
+/* si input va DENTRO del label  */
+  {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d0d0f;
+  font-weight: 700;
+}
+
+/* Foco visible para accesibilidad (navegación con teclado) */
+input[type="radio"]:focus-visible+label,
+label:has(input[type="radio"]:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Hover en labels no seleccionados */
+.toggle-group label:hover,
+.size-group label:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* Generate button */
+.btn-generate {
+  width: 100%;
+  padding: var(--smal);
+  background: var(--accent);
+  border: var(--none);
+  border-radius: var(--border-l);
+  color: var(--surface);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  margin-top: auto;
+  
+}
+
+.btn-generate:hover {
+  background: var(--accent-dim);
+  transform: translateY(-2px);
+}
+
+.btn-generate:active {
+  transform: scale(.97);
+}
+
+/* Shortcut hint */
+.shortcut-hint {
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-top: var(--smal);
+}
+
+kbd {
+  /* representa input de teclado  */
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'DM Mono', monospace;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: var(--smal);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    padding: var(--none);
+    margin: var(--none);
+    color: var(--muted);
+
+    span {
+      color: var(--accent);
+    }
+  }
+}

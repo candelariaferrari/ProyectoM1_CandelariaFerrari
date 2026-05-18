@@ -1,21 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto M1 - Candelaria Ferrari</title>
-</head>
-<body>
-    <header>
-        Generador de paletas <span>Aleatorio</span>
-    </header>
-    <main> <!-- Paletas -->
-        <aside> <!-- Sidebar -->
 
-        </aside>
-    </main>
-    <footer>
-        
-    </footer>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto M1 - Candelaria Ferrari</title>
+  <!-- Tipografias -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Mono:wght@300;400;500&amp;display=swap"
+    rel="stylesheet">
+  <!-- css -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1> Generador de paletas <span>Aleatorio</span>
+    </h1>
+  </header>
+  <main>
+    <section class="container-cards"> <!-- Palets -->
+      <div> <!-- card color -->
+   
+      </div>
+    </section>
+
+    <aside class="sidebar"> <!-- Sidebar -->
+      <fieldset>
+        <legend>Formato:</legend>
+        <div class="toggle-group">
+          <label>
+            <input type="radio" name="formato" value="hex" checked />
+            HEX
+          </label>
+          <label>
+            <input type="radio" name="formato" value="RGB" />
+            RGB
+          </label>
+          <label>
+            <input type="radio" name="formato" value="hsl" />
+            HSL
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tamaño de paleta:</legend>
+        <div class="size-group">
+          <label>
+            <input type="radio" name="tamanio" value="6" checked />
+            6
+          </label>
+          <label>
+            <input type="radio" name="tamanio" value="8" />
+            8
+          </label>
+          <label>
+            <input type="radio" name="tamanio" value="9" />
+            9
+          </label>
+        </div>
+      </fieldset>
+
+      <button class="btn-generate" id="generateBtn"> Generar paleta</button>
+      <p class="shortcut-hint">o presioná <kbd>Space</kbd></p>
+
+    </aside>
+  </main>
+  <footer>
+    <p>Creado por <span>@candeferrari</span></p>
+    <p>Proyecto final 01 - <span>Soy Henry</span></p>
+  </footer>
 </body>
+
 </html>
