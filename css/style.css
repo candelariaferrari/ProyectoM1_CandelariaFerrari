@@ -62,11 +62,50 @@ main {
 
 .container-cards {
   flex: 1;
+  padding: var(--xlarge);
+  display: grid;
+  grid-template-columns: repeat(var(--palette-size, 6), 1fr); /* ↑ usa la variable, con 6 como valor por defecto */
+  gap: var(--smal);
+
 }
 
+.card-color {
+  border: 1px solid var(--border);
+  border-radius: var(--border-l);
+  overflow: hidden;
+
+  .color {
+    background-color: #c8f135;
+    height: 90%;
+  }
+
+  .color-info {
+    padding: var(--smal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .color-code {
+      font-family: 'DM Mono', monospace;
+      font-size:0.9rem;
+      color: var(--text);
+      letter-spacing: .04em;
+    }
+    .copy-icon {
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition: color .15s;
+    }
+
+  
+  }
+}
+.color-info:hover .copy-icon {
+  color: var(--accent);
+}
+/* SIDEBAR */
 .sidebar {
-  width: 22%;
-  padding: var(--xlarge);
+  width: 18%;
+  padding: var(--xlarge) var(--smal);
   border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -78,9 +117,11 @@ main {
   justify-content: space-between;
   margin: 0.5rem 0rem 2rem;
 }
-fieldset{
+
+fieldset {
   border: var(--none);
 }
+
 /* Ocultás el input SIN usar display:none (display:none lo saca del foco del teclado, mal para accesibilidad) */
 input[type="radio"] {
   position: absolute;
@@ -145,7 +186,7 @@ label:has(input[type="radio"]:focus-visible) {
   cursor: pointer;
   transition: background .15s, transform .1s;
   margin-top: auto;
-  
+
 }
 
 .btn-generate:hover {
