@@ -14,103 +14,127 @@
 </head>
 
 <body>
-  <header>
-    <h1> Generador de paletas <span>Aleatorio</span>
-    </h1>
-  </header>
-  <main>
-    <section class="container-cards"> <!-- Palets -->
-      <div class="card-color"> <!-- card color -->
-        <div class="color"></div>
-        <span class="color-info">
-          <p class="color-code">#c8f135</p>
-          <span class="copy-icon">⧉</span>
-        </span>
-      </div>
-      <div class="card-color"> <!-- card color -->
-        <div class="color"></div>
-        <span class="color-info">
-          <p class="color-code">#c8f135</p>
-          <span class="copy-icon">⧉</span>
-        </span>
-      </div>
-      <div class="card-color"> <!-- card color -->
-        <div class="color"></div>
-        <span class="color-info">
-          <p class="color-code">#c8f135</p>
-          <span class="copy-icon">⧉</span>
-        </span>
-      </div>
-      <div class="card-color"> <!-- card color -->
-        <div class="color"></div>
-        <span class="color-info">
-          <p class="color-code">#c8f135</p>
-          <span class="copy-icon">⧉</span>
-        </span>
-      </div>
-      <div class="card-color"> <!-- card color -->
-        <div class="color"></div>
-        <span class="color-info">
-          <p class="color-code">#c8f135</p>
-          <span class="copy-icon">⧉</span>
-        </span>
-      </div>
-      <div class="card-color"> <!-- card color -->
-        <div class="color"></div>
-        <span class="color-info">
-          <p class="color-code">#c8f135</p>
-          <span class="copy-icon">⧉</span>
-        </span>
-      </div>
-  
-    </section>
+  <div class="wrapper" id="wrapper">
+    <!-- Todo lo que se achica y agranda -->
+    <div class="content">
+      <header>
+        <h1> Generador de paletas <span>Aleatorio</span>
+        </h1>
+        <p>By: Colorfy Studio</p>
+      </header>
+      <main>
+        <section class="container-cards"> <!-- Palets -->
+          <div class="card-color"> <!-- card color -->
+            <div class="color"></div>
+            <span class="color-info">
+              <p class="color-code">#c8f135</p>
+              <span class="copy-icon">⧉</span>
+            </span>
+          </div>
+          <div class="card-color"> <!-- card color -->
+            <div class="color"></div>
+            <span class="color-info">
+              <p class="color-code">#c8f135</p>
+              <span class="copy-icon">⧉</span>
+            </span>
+          </div>
+          <div class="card-color"> <!-- card color -->
+            <div class="color"></div>
+            <span class="color-info">
+              <p class="color-code">#c8f135</p>
+              <span class="copy-icon">⧉</span>
+            </span>
+          </div>
+          <div class="card-color"> <!-- card color -->
+            <div class="color"></div>
+            <span class="color-info">
+              <p class="color-code">#c8f135</p>
+              <span class="copy-icon">⧉</span>
+            </span>
+          </div>
+          <div class="card-color"> <!-- card color -->
+            <div class="color"></div>
+            <span class="color-info">
+              <p class="color-code">#c8f135</p>
+              <span class="copy-icon">⧉</span>
+            </span>
+          </div>
+          <div class="card-color"> <!-- card color -->
+            <div class="color"></div>
+            <span class="color-info">
+              <p class="color-code">#c8f135</p>
+              <span class="copy-icon">⧉</span>
+            </span>
+          </div>
 
-    <aside class="sidebar"> <!-- Sidebar -->
-      <fieldset>
-        <legend>Formato:</legend>
-        <div class="toggle-group">
-          <label>
-            <input type="radio" name="formato" value="hex" checked />
-            HEX
-          </label>
-          <label>
-            <input type="radio" name="formato" value="RGB" />
-            RGB
-          </label>
-          <label>
-            <input type="radio" name="formato" value="hsl" />
-            HSL
-          </label>
-        </div>
-      </fieldset>
+        </section>
 
-      <fieldset>
-        <legend>Tamaño de paleta:</legend>
-        <div class="size-group">
-          <label>
-            <input type="radio" name="tamanio" value="6" checked />
-            6
-          </label>
-          <label>
-            <input type="radio" name="tamanio" value="8" />
-            8
-          </label>
-          <label>
-            <input type="radio" name="tamanio" value="9" />
-            9
-          </label>
-        </div>
-      </fieldset>
+      </main>
+      <footer>
+        <p>Creado por <span>@candeferrari</span></p>
+        <p>Proyecto final 01 - <span>Soy Henry</span></p>
+      </footer>
+    </div>
+    <!-- Sidebar -->
+    <button class="btn-toggle-sidebar" id="btnToggle" aria-label="Colapsar panel">›</button>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <button class="btn-theme" id="btnTheme" aria-label="Cambiar tema">☀</button>
+      </div>
 
-      <button class="btn-generate" id="generateBtn"> Generar paleta</button>
-      <p class="shortcut-hint">o presioná <kbd>Space</kbd></p>
+      <div class="sidebar-content">
+        <fieldset>
+          <legend>Formato:</legend>
+          <div class="toggle-group">
+            <label>
+              <input type="radio" name="formato" value="hex" checked />
+              HEX
+            </label>
+            <label>
+              <input type="radio" name="formato" value="rgb" />
+              RGB
+            </label>
+            <label>
+              <input type="radio" name="formato" value="hsl" />
+              HSL
+            </label>
+          </div>
+        </fieldset>
 
+        <fieldset>
+          <legend>Tamaño de paleta:</legend>
+          <div class="size-group">
+            <label>
+              <input type="radio" name="tamanio" value="6" checked />
+              6
+            </label>
+            <label>
+              <input type="radio" name="tamanio" value="8" />
+              8
+            </label>
+            <label>
+              <input type="radio" name="tamanio" value="9" />
+              9
+            </label>
+          </div>
+        </fieldset>
+
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="btn-generate" id="generateBtn">Generar paleta</button>
+        <p class="shortcut-hint">o presioná <kbd>Space</kbd></p>
+      </div>
     </aside>
-  </main>
-  <footer>
-    <p>Creado por <span>@candeferrari</span></p>
-    <p>Proyecto final 01 - <span>Soy Henry</span></p>
-  </footer>
+  </div>
+
+
+
+
+
+
+
+  <script src="./js/script.js"></script>
 </body>
 
 </html>
