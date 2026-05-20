@@ -5,16 +5,6 @@ const btnToggle = document.getElementById('btnToggle');
 /* Seleccionar tamaño de paletas */
 const radios = document.querySelectorAll('input[name="tamanio"]');
 
-radios.forEach(radio => {
-  radio.addEventListener('change', () => {
-    document.documentElement.style.setProperty(
-      '--palette-size',
-      radio.value  // "6", "8" o "9"
-    );
-    generarPaleta(); // ← esto es todo lo que faltaba
-  });
-});
-
 
 
 // Atajo de teclado: Alt + S
@@ -78,3 +68,15 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => { /* DOMContentLoaded se dispara cuando el HTML terminó de cargar */
   generarPaleta();
 });
+
+/* Seleccionar cantidad de colores */
+radios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.documentElement.style.setProperty(
+      '--palette-size',
+      radio.value  // "6", "8" o "9"
+    );
+    generarPaleta(); // ← esto es todo lo que faltaba
+  });
+});
+
