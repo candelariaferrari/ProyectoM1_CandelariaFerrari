@@ -1,19 +1,41 @@
-/* sidebar */
+/* Sidebar */
 const wrapper = document.getElementById('wrapper');
 const btnToggle = document.getElementById('btnToggle');
 
-/* Seleccionar tamaño de paletas */
-const radios = document.querySelectorAll('input[name="tamanio"]');
+/* Generar paleta */
+const grid = document.getElementById('paletteGrid');
 
+/* Seleccionar  */
+const radiosTamanio = document.querySelectorAll('input[name="tamanio"]');
+const radiosFormato = document.querySelectorAll('input[name="formato"]');
 
+/* Boton */
+const generateBtn = document.getElementById('generateBtn');
 
-// Atajo de teclado: Alt + S
-document.addEventListener('keydown', (e) => {
-  if (e.altKey && e.key === 's') toggleSidebar();
+// Copy + toast
+const toast = document.getElementById('toast');
+
+/* Event listeners */
+
+btnToggle.addEventListener('click', toggleSidebar); /* sidebar */
+
+generateBtn.addEventListener('click', generarPaleta); /* genera paleta con btn */
+
+document.addEventListener('DOMContentLoaded', generarPaleta); /* se ejecuta cuando el HTML terminó de cargar */
+
+document.addEventListener('keydown', manejarAtajos); /* Escucha teclas del teclado */
+
+radiosTamanio.forEach(radio => {
+  radio.addEventListener('change', cambiarTamanio);
 });
 
-/* Sidebar */
+radiosFormato.forEach(radio => {
+  radio.addEventListener('change', actualizarFormato);
+});
 
+
+/* FUNCIONES */
+/* Sidebar */
 function toggleSidebar() {
   const colapsado = wrapper.classList.toggle('colapsado');
   btnToggle.classList.toggle('colapsado', colapsado); // ← esta línea faltaba
@@ -23,60 +45,130 @@ function toggleSidebar() {
     colapsado ? 'Expandir panel' : 'Colapsar panel'
   );
 }
-btnToggle.addEventListener('click', toggleSidebar);
+/* Generar una paleta completa */
+function generarPaleta() {
+  // Lee cuántos colores eligió el usuario
+  const cantidad = document.querySelector('input[name="tamanio"]:checked').value;
+  grid.innerHTML = ''; // limpia las cards anteriores
+  for (let i = 0; i < cantidad; i++) { /* se ejecuta tantas veces como colores elegidos */
+    const hex = randomHex(); /* genera color aleatorio*/
+    const colorMostrado = formatearColor(hex); /*  Convierte el color según el formato elegido. */
+    const card = document.createElement('div');
+    card.dataset.hex = hex; /*  Guardamos el HEX original dentro del dataset, para poder cambiar HEX/RGB/HSL */
+    card.className = 'card-color';
+    card.innerHTML = `
+        <div class="color" style="background-color: ${hex}"></div>
+        <span class="color-info">
+          <p class="color-code">${colorMostrado}</p>
+          <span class="copy-icon">⧉</span>
+        </span>
+      `;
+    /* Copiar color */
+    card.addEventListener('click', () => {
 
+      const code = card.querySelector('.color-code').textContent;
+
+      navigator.clipboard.writeText(code);
+
+      showToast(code + ' copiado');
+
+    });
+    grid.appendChild(card); /* Se agrega una card por cada color al contendor principal */
+  }
+}
+
+function manejarAtajos(e) {
+
+  if (e.code === 'Space' && e.target === document.body) {
+    e.preventDefault();
+    generarPaleta();
+  }
+
+}
+
+function cambiarTamanio(e) {
+
+  document.documentElement.style.setProperty(
+    '--palette-size',
+    e.target.value
+  );
+
+  generarPaleta();
+
+}
+
+function actualizarFormato() { /* Actualiza solamente el texto del color.  */
+
+  document.querySelectorAll('.card-color').forEach(card => {
+
+    const hex = card.dataset.hex;
+
+    const colorMostrado = formatearColor(hex);
+
+    card.querySelector('.color-code').textContent = colorMostrado;
+
+  });
+
+}
+
+
+/* Helpers Funciones */
 /* Generar un color HEX aleatorio */
 function randomHex() { /* crea un color aleatoreamente  */
   return '#' + Math.floor(Math.random() * 16777215) /* 16777215 es el número decimal de #ffffff */
     .toString(16) /* Math.random() genera un número entre 0 y 1, lo multiplicás por ese máximo y convertís a base 16. */
     .padStart(6, '0');
 }
-/* Generar una paleta completa */
-function generarPaleta() {
-  // Lee cuántos colores eligió el usuario
-  const cantidad = document.querySelector('input[name="tamanio"]:checked').value;
 
-  const grid = document.getElementById('paletteGrid');
-  grid.innerHTML = ''; // limpia las cards anteriores
-
-  for (let i = 0; i < cantidad; i++) {
-    const color = randomHex();
-
-    const card = document.createElement('div');
-    card.className = 'card-color';
-    card.innerHTML = `
-      <div class="color" style="background-color: ${color}"></div>
-      <span class="color-info">
-        <p class="color-code">${color}</p>
-        <span class="copy-icon">⧉</span>
-      </span>
-    `;
-
-    grid.appendChild(card);
-  }
+function getFormato() {
+  return document.querySelector('input[name="formato"]:checked').value;
+  // devuelve "hex", "rgb" o "hsl"
 }
-/* Conectarlo al botón y al teclado */
-document.getElementById('generateBtn').addEventListener('click', generarPaleta);
+function formatearColor(hex) {
+  const formato = getFormato();
+  if (formato === 'rgb') return hexToRgb(hex);
+  if (formato === 'hsl') return hexToHsl(hex);
+  return hex; // por defecto HEX
+}
 
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space' && e.target === document.body) {
-    e.preventDefault();
-    generarPaleta();
+/*  HEX → RGB */
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+/* HEX → HSL */
+function hexToHsl(hex) {
+  // Primero convertís HEX a RGB
+  let r = parseInt(hex.slice(1, 3), 16) / 255;
+  let g = parseInt(hex.slice(3, 5), 16) / 255;
+  let b = parseInt(hex.slice(5, 7), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: h = ((b - r) / d + 2) / 6; break;
+      case b: h = ((r - g) / d + 4) / 6; break;
+    }
   }
-});
-/* Cargar una primera paleta apenas carga el html */
-document.addEventListener('DOMContentLoaded', () => { /* DOMContentLoaded se dispara cuando el HTML terminó de cargar */
-  generarPaleta();
-});
 
-/* Seleccionar cantidad de colores */
-radios.forEach(radio => {
-  radio.addEventListener('change', () => {
-    document.documentElement.style.setProperty(
-      '--palette-size',
-      radio.value  // "6", "8" o "9"
-    );
-    generarPaleta(); // ← esto es todo lo que faltaba
-  });
-});
+  return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+}
 
+
+// Copy + toast
+function showToast(msg) {
+  toast.textContent = '✓ ' + msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
