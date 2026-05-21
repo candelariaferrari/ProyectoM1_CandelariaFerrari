@@ -1,6 +1,7 @@
 /* Sidebar */
 const wrapper = document.getElementById('wrapper');
 const btnToggle = document.getElementById('btnToggle');
+const btnMobileToggle = document.getElementById('btnMobileToggle');
 
 /* Generar paleta */
 const grid = document.getElementById('paletteGrid');
@@ -19,6 +20,33 @@ const toast = document.getElementById('toast');
 
 btnToggle.addEventListener('click', toggleSidebar); /* sidebar */
 
+/* btnMobileToggle.addEventListener('click', () => {
+  const sidebar = document.getElementById('sidebar');
+  const abierto = sidebar.classList.toggle('mobile-abierto');
+  btnMobileToggle.classList.toggle('abierto', abierto);
+}); */
+/* btnMobileToggle.addEventListener('click', () => {
+  const estaAbierto = sidebar.classList.contains('mobile-abierto');
+
+  if (estaAbierto) {
+    sidebar.classList.add('mobile-cerrando');
+
+    setTimeout(() => {
+      sidebar.classList.remove('mobile-abierto');
+      sidebar.classList.remove('mobile-cerrando');
+    }, 300); // ← tiene que coincidir exactamente con la duración del fadeOut
+
+  } else {
+    sidebar.classList.add('mobile-abierto');
+  }
+
+  btnMobileToggle.classList.toggle('abierto', !estaAbierto);
+}); */
+btnMobileToggle.addEventListener('click', () => {
+  const estaAbierto = sidebar.classList.contains('mobile-abierto');
+  sidebar.classList.toggle('mobile-abierto');
+  btnMobileToggle.classList.toggle('abierto', !estaAbierto);
+});
 generateBtn.addEventListener('click', generarPaleta); /* genera paleta con btn */
 
 document.addEventListener('DOMContentLoaded', generarPaleta); /* se ejecuta cuando el HTML terminó de cargar */
@@ -89,7 +117,7 @@ function manejarAtajos(e) {
 function cambiarTamanio(e) {
 
   document.documentElement.style.setProperty(
-    '--palette-size',
+    '--palette-size-desktop',
     e.target.value
   );
 

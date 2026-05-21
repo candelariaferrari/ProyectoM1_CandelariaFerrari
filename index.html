@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -20,10 +20,11 @@
       <header>
         <h1> Generador de paletas <span>Aleatorio</span>
         </h1>
-        <p>By: Colorfy Studio</p>
+        <p>By: Colorfly Studio</p>
       </header>
+
       <main>
-        <section class="container-cards" id="paletteGrid"> <!-- Palets -->
+        <section class="container-cards" id="paletteGrid" aria-label="Paleta de colores generada"> <!-- Palets -->
 
         </section>
 
@@ -34,6 +35,10 @@
       </footer>
     </div>
     <!-- Sidebar -->
+    <button class="btn-mobile-toggle" id="btnMobileToggle">
+      Opciones de paleta
+      <span class="arrow">▼</span>
+    </button>
     <button class="btn-toggle-sidebar" id="btnToggle" aria-label="Colapsar panel">›</button>
     <aside class="sidebar" id="sidebar">
       <!--    <div class="sidebar-header">
