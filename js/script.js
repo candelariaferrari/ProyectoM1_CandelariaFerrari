@@ -68,21 +68,22 @@ function generarPaleta() {
     const card = document.createElement('div');
     card.dataset.hsl = JSON.stringify(hsl);     // guardamos el HSL original en la card
     card.className = 'card-color';
-
+    card.style.animationDelay = `${i * 80}ms`;
     card.innerHTML = `
       <div class="color" style="background-color: ${hexParaSwatch}"></div>
       <div class="color-info">
+       <p class="color-code">${colorMostrado}</p>
         <span>
-          <p class="color-code">${colorMostrado}</p>
           <p class="color-code-hex">${hexParaSwatch}</p>
+          <button class="copy-icon" aria-label="Copiar color">⧉</button>
         </span>
-        <button class="copy-icon" aria-label="Copiar color">⧉</button>
+  
       </div>
     `;
 
     // Copiar color al portapapeles al hacer click
     card.addEventListener('click', () => {
-      const code = card.querySelector('.color-code').textContent;
+      const code = card.querySelector('.color-code-hex').textContent;
       navigator.clipboard.writeText(code)
         .then(() => showToast(code + ' copiado'))
         .catch(() => showToast('No se pudo copiar'));
