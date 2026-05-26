@@ -119,7 +119,8 @@ main {
   padding: var(--small);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+ min-height: 60px;      
+  align-items: flex-start;  
   transform: translateY(4px);
   transition: transform 0.25s ease, background-color 0.25s ease;
 }
@@ -134,7 +135,7 @@ main {
 
 .card-color .color-info .copy-icon {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 1rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -341,22 +342,6 @@ label:has(input[type="radio"]:focus-visible) {
 
 .btn-generate:active {
   transform: scale(.97);
-}
-
-.shortcut-hint {
-  text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: .65rem;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  margin-top: var(--small);
-}
-
-kbd {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 1px 5px;
-  font-family: 'DM Mono', monospace;
 }
 
 /* ── FOOTER ── */

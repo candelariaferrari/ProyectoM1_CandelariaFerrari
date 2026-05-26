@@ -25,11 +25,11 @@ btnMobileToggle.addEventListener('click', () => {
   sidebar.classList.toggle('mobile-abierto');
   btnMobileToggle.classList.toggle('abierto', !estaAbierto);
 });
-generateBtn.addEventListener('click', generarPaleta); 
+generateBtn.addEventListener('click', generarPaleta);
 
-document.addEventListener('DOMContentLoaded', generarPaleta); 
+document.addEventListener('DOMContentLoaded', generarPaleta);
 
-document.addEventListener('keydown', manejarAtajos); 
+document.addEventListener('keydown', manejarAtajos);
 
 radiosTamanio.forEach(radio => {
   radio.addEventListener('change', cambiarTamanio);
@@ -39,13 +39,12 @@ radiosFormato.forEach(radio => {
   radio.addEventListener('change', actualizarFormato);
 });
 
-
 /* FUNCIONES */
 
 /* Sidebar */
 function toggleSidebar() {
   const colapsado = wrapper.classList.toggle('colapsado');
-  btnToggle.classList.toggle('colapsado', colapsado); 
+  btnToggle.classList.toggle('colapsado', colapsado);
   btnToggle.textContent = colapsado ? '‹' : '›';
   btnToggle.setAttribute(
     'aria-label',
@@ -55,18 +54,18 @@ function toggleSidebar() {
 /* Generar una paleta  */
 function generarPaleta() {
   const cantidad = document.querySelector('input[name="tamanio"]:checked').value;
-  grid.innerHTML = ''; 
-  for (let i = 0; i < cantidad; i++) { 
-    const hex = randomHex(); 
-    const colorMostrado = formatearColor(hex); 
+  grid.innerHTML = '';
+  for (let i = 0; i < cantidad; i++) {
+    const hex = randomHex();
+    const colorMostrado = formatearColor(hex);
     const card = document.createElement('div');
-    card.dataset.hex = hex; 
+    card.dataset.hex = hex;
     card.className = 'card-color';
     card.innerHTML = `
         <div class="color" style="background-color: ${hex}"></div>
         <span class="color-info">
           <p class="color-code">${colorMostrado}</p>
-         <button class="copy-icon" aria-label="Copiar color">⧉</button>
+        <button class="copy-icon" aria-label="Copiar color">⧉</button>
         </span>
       `;
     /* Copiar color */
@@ -83,15 +82,6 @@ function generarPaleta() {
     });
     grid.appendChild(card);
   }
-}
-
-function manejarAtajos(e) {
-
-  if (e.code === 'Space' && e.target === document.body) {
-    e.preventDefault();
-    generarPaleta();
-  }
-
 }
 
 function cambiarTamanio(e) {
@@ -122,10 +112,10 @@ function actualizarFormato() {
 
 /* Helpers Funciones */
 
-function randomHex() { 
-  return '#' + Math.floor(Math.random() * 16777215) 
-    .toString(16) 
-    .padStart(6, '0'); 
+function randomHex() {
+  return '#' + Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, '0');
 }
 
 function getFormato() {
@@ -136,14 +126,14 @@ function formatearColor(hex) {
   const formato = getFormato();
   if (formato === 'rgb') return hexToRgb(hex);
   if (formato === 'hsl') return hexToHsl(hex);
-  return hex; 
+  return hex;
 }
 
 /*  HEX → RGB */
 function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1, 3), 16); 
-  const g = parseInt(hex.slice(3, 5), 16); 
-  const b = parseInt(hex.slice(5, 7), 16); 
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
   return `rgb(${r}, ${g}, ${b})`;
 }
 /* HEX → HSL */
