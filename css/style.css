@@ -374,10 +374,46 @@ footer p {
   margin: var(--none);
   color: var(--muted);
 }
-
 footer p span {
   color: var(--accent);
 }
+.footer-links{
+  display: flex;
+
+}
+.footer-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  padding: var(--none);
+  margin: var(--none) var(--small);
+  color: var(--muted);
+  position: relative;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.footer-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background:var(--accent-dim);
+  transition: width 0.3s ease;
+  border-radius: 999px;
+}
+
+/* Hover */
+.footer-links a:hover {
+ 
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.footer-links a:hover::after {
+  width: 100%;
+}
+
 
 /* ── RESPONSIVE MOBILE ── */
 @media (max-width: 768px) {
