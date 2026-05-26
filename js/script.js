@@ -18,7 +18,6 @@ const generateBtn = document.getElementById('generateBtn');
 const toast = document.getElementById('toast');
 
 /* Event listeners */
-
 btnToggle.addEventListener('click', toggleSidebar); /* sidebar */
 
 btnMobileToggle.addEventListener('click', () => {
@@ -26,11 +25,11 @@ btnMobileToggle.addEventListener('click', () => {
   sidebar.classList.toggle('mobile-abierto');
   btnMobileToggle.classList.toggle('abierto', !estaAbierto);
 });
-generateBtn.addEventListener('click', generarPaleta); /* genera paleta con btn */
+generateBtn.addEventListener('click', generarPaleta); 
 
-document.addEventListener('DOMContentLoaded', generarPaleta); /* se ejecuta cuando el HTML terminó de cargar */
+document.addEventListener('DOMContentLoaded', generarPaleta); 
 
-document.addEventListener('keydown', manejarAtajos); /* Escucha teclas del teclado */
+document.addEventListener('keydown', manejarAtajos); 
 
 radiosTamanio.forEach(radio => {
   radio.addEventListener('change', cambiarTamanio);
@@ -46,23 +45,22 @@ radiosFormato.forEach(radio => {
 /* Sidebar */
 function toggleSidebar() {
   const colapsado = wrapper.classList.toggle('colapsado');
-  btnToggle.classList.toggle('colapsado', colapsado); // ← esta línea faltaba
+  btnToggle.classList.toggle('colapsado', colapsado); 
   btnToggle.textContent = colapsado ? '‹' : '›';
   btnToggle.setAttribute(
     'aria-label',
     colapsado ? 'Expandir panel' : 'Colapsar panel'
   );
 }
-/* Generar una paleta completa */
+/* Generar una paleta  */
 function generarPaleta() {
-  // Lee cuántos colores eligió el usuario
   const cantidad = document.querySelector('input[name="tamanio"]:checked').value;
-  grid.innerHTML = ''; // limpia las cards anteriores
-  for (let i = 0; i < cantidad; i++) { /* se ejecuta tantas veces como colores elegidos */
-    const hex = randomHex(); /* genera color aleatorio*/
-    const colorMostrado = formatearColor(hex); /*  Convierte el color según el formato elegido. */
+  grid.innerHTML = ''; 
+  for (let i = 0; i < cantidad; i++) { 
+    const hex = randomHex(); 
+    const colorMostrado = formatearColor(hex); 
     const card = document.createElement('div');
-    card.dataset.hex = hex; /*  Guardamos el HEX original dentro del dataset, para poder cambiar HEX/RGB/HSL */
+    card.dataset.hex = hex; 
     card.className = 'card-color';
     card.innerHTML = `
         <div class="color" style="background-color: ${hex}"></div>
@@ -76,7 +74,6 @@ function generarPaleta() {
 
       const code = card.querySelector('.color-code').textContent;
 
-      // Siempre usá .catch() o async/await con try/catch
       navigator.clipboard.writeText(code)
         .then(() => showToast(code + ' copiado'))
         .catch(() => showToast('No se pudo copiar'));
@@ -84,7 +81,7 @@ function generarPaleta() {
       showToast(code + ' copiado');
 
     });
-    grid.appendChild(card); /* Se agrega una card por cada color al contendor principal */
+    grid.appendChild(card);
   }
 }
 
@@ -108,7 +105,7 @@ function cambiarTamanio(e) {
 
 }
 
-function actualizarFormato() { /* Actualiza solamente el texto del color.  */
+function actualizarFormato() {
 
   document.querySelectorAll('.card-color').forEach(card => {
 
@@ -124,34 +121,33 @@ function actualizarFormato() { /* Actualiza solamente el texto del color.  */
 
 
 /* Helpers Funciones */
-/* Generar un color HEX aleatorio */
-function randomHex() { /* crea un color aleatoreamente  */
-  return '#' + Math.floor(Math.random() * 16777215) /* 16777215 es el número decimal de #ffffff */
-    .toString(16) /* Math.random() genera un número entre 0 y 1, lo multiplicás por ese máximo y convertís a base 16. */
-    .padStart(6, '0'); // "000005"
+
+function randomHex() { 
+  return '#' + Math.floor(Math.random() * 16777215) 
+    .toString(16) 
+    .padStart(6, '0'); 
 }
 
 function getFormato() {
   return document.querySelector('input[name="formato"]:checked').value;
-  // devuelve "hex", "rgb" o "hsl"
+
 }
 function formatearColor(hex) {
   const formato = getFormato();
   if (formato === 'rgb') return hexToRgb(hex);
   if (formato === 'hsl') return hexToHsl(hex);
-  return hex; // por defecto HEX
+  return hex; 
 }
 
 /*  HEX → RGB */
 function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1, 3), 16); // 00
-  const g = parseInt(hex.slice(3, 5), 16); //00
-  const b = parseInt(hex.slice(5, 7), 16); //05
+  const r = parseInt(hex.slice(1, 3), 16); 
+  const g = parseInt(hex.slice(3, 5), 16); 
+  const b = parseInt(hex.slice(5, 7), 16); 
   return `rgb(${r}, ${g}, ${b})`;
 }
 /* HEX → HSL */
 function hexToHsl(hex) {
-  // Primero convertís HEX a RGB
   let r = parseInt(hex.slice(1, 3), 16) / 255;
   let g = parseInt(hex.slice(3, 5), 16) / 255;
   let b = parseInt(hex.slice(5, 7), 16) / 255;
