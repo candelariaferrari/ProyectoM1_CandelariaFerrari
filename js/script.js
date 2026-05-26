@@ -1,47 +1,50 @@
-/* Sidebar */
+/* ── REFERENCIAS AL DOM ── */
 const wrapper = document.getElementById('wrapper');
 const btnToggle = document.getElementById('btnToggle');
 const btnMobileToggle = document.getElementById('btnMobileToggle');
 const sidebar = document.getElementById('sidebar');
-
-/* Generar paleta */
 const grid = document.getElementById('paletteGrid');
+const generateBtn = document.getElementById('generateBtn');
+const toast = document.getElementById('toast');
 
-/* Seleccionar  */
+/* ── REFERENCIAS A LOS CONTROLES ── */
 const radiosTamanio = document.querySelectorAll('input[name="tamanio"]');
 const radiosFormato = document.querySelectorAll('input[name="formato"]');
 
-/* Boton */
-const generateBtn = document.getElementById('generateBtn');
 
-// Copy + toast
-const toast = document.getElementById('toast');
+/* ── EVENT LISTENERS ── */
 
-/* Event listeners */
-btnToggle.addEventListener('click', toggleSidebar); /* sidebar */
+// Sidebar desktop
+btnToggle.addEventListener('click', toggleSidebar);
 
+// Sidebar mobile
 btnMobileToggle.addEventListener('click', () => {
   const estaAbierto = sidebar.classList.contains('mobile-abierto');
   sidebar.classList.toggle('mobile-abierto');
   btnMobileToggle.classList.toggle('abierto', !estaAbierto);
 });
+
+// Botón generar
 generateBtn.addEventListener('click', generarPaleta);
 
+// Genera la paleta al cargar la página
 document.addEventListener('DOMContentLoaded', generarPaleta);
 
-document.addEventListener('keydown', manejarAtajos);
 
+// Cambiar tamaño de paleta
 radiosTamanio.forEach(radio => {
   radio.addEventListener('change', cambiarTamanio);
 });
 
+// Cambiar formato de color
 radiosFormato.forEach(radio => {
   radio.addEventListener('change', actualizarFormato);
 });
 
-/* FUNCIONES */
 
-/* Sidebar */
+/* ── FUNCIONES PRINCIPALES ── */
+
+/* Mostrar / ocultar sidebar en desktop */
 function toggleSidebar() {
   const colapsado = wrapper.classList.toggle('colapsado');
   btnToggle.classList.toggle('colapsado', colapsado);
@@ -51,119 +54,119 @@ function toggleSidebar() {
     colapsado ? 'Expandir panel' : 'Colapsar panel'
   );
 }
-/* Generar una paleta  */
+
+/* Generar la paleta completa */
 function generarPaleta() {
   const cantidad = document.querySelector('input[name="tamanio"]:checked').value;
   grid.innerHTML = '';
+
   for (let i = 0; i < cantidad; i++) {
-    const hex = randomHex();
-    const colorMostrado = formatearColor(hex);
+    const hsl = randomHsl();                    // el color nace en HSL
+    const colorMostrado = formatearColor(hsl);  // se muestra según el formato elegido
+    const hexParaSwatch = hslToHex(hsl);        // el fondo visual siempre usa HEX
+
     const card = document.createElement('div');
-    card.dataset.hex = hex;
+    card.dataset.hsl = JSON.stringify(hsl);     // guardamos el HSL original en la card
     card.className = 'card-color';
+
     card.innerHTML = `
-        <div class="color" style="background-color: ${hex}"></div>
-        <span class="color-info">
+      <div class="color" style="background-color: ${hexParaSwatch}"></div>
+      <div class="color-info">
+        <span>
           <p class="color-code">${colorMostrado}</p>
-        <button class="copy-icon" aria-label="Copiar color">⧉</button>
+          <p class="color-code-hex">${hexParaSwatch}</p>
         </span>
-      `;
-    /* Copiar color */
+        <button class="copy-icon" aria-label="Copiar color">⧉</button>
+      </div>
+    `;
+
+    // Copiar color al portapapeles al hacer click
     card.addEventListener('click', () => {
-
       const code = card.querySelector('.color-code').textContent;
-
       navigator.clipboard.writeText(code)
         .then(() => showToast(code + ' copiado'))
         .catch(() => showToast('No se pudo copiar'));
-
-      showToast(code + ' copiado');
-
     });
+
     grid.appendChild(card);
   }
 }
 
+/* Cambiar tamaño de paleta y regenerar */
 function cambiarTamanio(e) {
-
   document.documentElement.style.setProperty(
     '--palette-size-desktop',
     e.target.value
   );
-
   generarPaleta();
-
 }
 
+/* Actualizar solo el texto del color sin regenerar la paleta */
 function actualizarFormato() {
-
   document.querySelectorAll('.card-color').forEach(card => {
-
-    const hex = card.dataset.hex;
-
-    const colorMostrado = formatearColor(hex);
-
-    card.querySelector('.color-code').textContent = colorMostrado;
-
+    const hsl = JSON.parse(card.dataset.hsl);
+    card.querySelector('.color-code').textContent = formatearColor(hsl);
   });
-
 }
 
 
-/* Helpers Funciones */
+/* ── HELPERS: GENERACIÓN Y CONVERSIÓN DE COLORES ── */
 
-function randomHex() {
-  return '#' + Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, '0');
+/* Genera un color aleatorio en formato HSL
+   - Saturación entre 40-100%: evita colores apagados o grises
+   - Luminosidad entre 30-70%: evita colores muy oscuros o muy claros */
+function randomHsl() {
+  return {
+    h: Math.floor(Math.random() * 360),
+    s: Math.floor(Math.random() * 60) + 40,
+    l: Math.floor(Math.random() * 40) + 30
+  };
 }
 
+/* Devuelve el color en el formato que eligió el usuario */
+function formatearColor(hsl) {
+  const formato = getFormato();
+  if (formato === 'hex') return hslToHex(hsl);
+  if (formato === 'rgb') return hslToRgb(hsl);
+  return hslToString(hsl); // por defecto HSL
+}
+
+/* Lee el formato seleccionado en los radio buttons */
 function getFormato() {
   return document.querySelector('input[name="formato"]:checked').value;
-
-}
-function formatearColor(hex) {
-  const formato = getFormato();
-  if (formato === 'rgb') return hexToRgb(hex);
-  if (formato === 'hsl') return hexToHsl(hex);
-  return hex;
 }
 
-/*  HEX → RGB */
-function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
+/* HSL → string legible:  */
+function hslToString({ h, s, l }) {
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+/* HSL → HEX */
+function hslToHex({ h, s, l }) {
+  s /= 100;
+  l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  const toHex = x => Math.round(x * 255).toString(16).padStart(2, '0');
+  return `#${toHex(f(0))}${toHex(f(8))}${toHex(f(4))}`;
+}
+
+/* HSL → RGB */
+function hslToRgb({ h, s, l }) {
+  s /= 100;
+  l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  const r = Math.round(f(0) * 255);
+  const g = Math.round(f(8) * 255);
+  const b = Math.round(f(4) * 255);
   return `rgb(${r}, ${g}, ${b})`;
 }
-/* HEX → HSL */
-function hexToHsl(hex) {
-  let r = parseInt(hex.slice(1, 3), 16) / 255;
-  let g = parseInt(hex.slice(3, 5), 16) / 255;
-  let b = parseInt(hex.slice(5, 7), 16) / 255;
-
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h, s, l = (max + min) / 2;
-
-  if (max === min) {
-    h = s = 0;
-  } else {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
-    switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
-      case g: h = ((b - r) / d + 2) / 6; break;
-      case b: h = ((r - g) / d + 4) / 6; break;
-    }
-  }
-
-  return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
-}
 
 
-// Copy + toast
+/* ── TOAST ── */
 function showToast(msg) {
   toast.textContent = '✓ ' + msg;
   toast.classList.add('show');

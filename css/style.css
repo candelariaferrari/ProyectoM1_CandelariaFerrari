@@ -132,6 +132,17 @@ main {
   letter-spacing: .04em;
   transition: color 0.2s ease;
 }
+.card-color .color-info .color-code-hex {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text);
+  font-weight: bold;
+  border-top: 1px solid var(--border);
+  letter-spacing: .04em;
+  transition: color 0.2s ease;
+  margin-top: var(--small);
+  padding-top: var(--small);
+}
 
 .card-color .color-info .copy-icon {
   color: var(--muted);
