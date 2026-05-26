@@ -2,10 +2,10 @@
 # 🎨 Generador de Paletas — Colorfly Studio
 
 ![Preview del proyecto](./assets/screenshot-proyecto.png)
-<!-- Reemplazá esta línea con la ruta a tu captura de pantalla o gif -->
+
 
 🔗 **[Ver demo en vivo](https://candelariaferrari.github.io/ProyectoM1_CandelariaFerrari/)**
-<!-- Reemplazá con tu URL real de GitHub Pages -->
+
 
 ---
 
