@@ -2,6 +2,7 @@
 const wrapper = document.getElementById('wrapper');
 const btnToggle = document.getElementById('btnToggle');
 const btnMobileToggle = document.getElementById('btnMobileToggle');
+const sidebar = document.getElementById('sidebar');
 
 /* Generar paleta */
 const grid = document.getElementById('paletteGrid');
@@ -20,28 +21,6 @@ const toast = document.getElementById('toast');
 
 btnToggle.addEventListener('click', toggleSidebar); /* sidebar */
 
-/* btnMobileToggle.addEventListener('click', () => {
-  const sidebar = document.getElementById('sidebar');
-  const abierto = sidebar.classList.toggle('mobile-abierto');
-  btnMobileToggle.classList.toggle('abierto', abierto);
-}); */
-/* btnMobileToggle.addEventListener('click', () => {
-  const estaAbierto = sidebar.classList.contains('mobile-abierto');
-
-  if (estaAbierto) {
-    sidebar.classList.add('mobile-cerrando');
-
-    setTimeout(() => {
-      sidebar.classList.remove('mobile-abierto');
-      sidebar.classList.remove('mobile-cerrando');
-    }, 300); // ← tiene que coincidir exactamente con la duración del fadeOut
-
-  } else {
-    sidebar.classList.add('mobile-abierto');
-  }
-
-  btnMobileToggle.classList.toggle('abierto', !estaAbierto);
-}); */
 btnMobileToggle.addEventListener('click', () => {
   const estaAbierto = sidebar.classList.contains('mobile-abierto');
   sidebar.classList.toggle('mobile-abierto');
@@ -63,6 +42,7 @@ radiosFormato.forEach(radio => {
 
 
 /* FUNCIONES */
+
 /* Sidebar */
 function toggleSidebar() {
   const colapsado = wrapper.classList.toggle('colapsado');
@@ -88,7 +68,7 @@ function generarPaleta() {
         <div class="color" style="background-color: ${hex}"></div>
         <span class="color-info">
           <p class="color-code">${colorMostrado}</p>
-          <span class="copy-icon">⧉</span>
+         <button class="copy-icon" aria-label="Copiar color">⧉</button>
         </span>
       `;
     /* Copiar color */
@@ -96,7 +76,10 @@ function generarPaleta() {
 
       const code = card.querySelector('.color-code').textContent;
 
-      navigator.clipboard.writeText(code);
+      // Siempre usá .catch() o async/await con try/catch
+      navigator.clipboard.writeText(code)
+        .then(() => showToast(code + ' copiado'))
+        .catch(() => showToast('No se pudo copiar'));
 
       showToast(code + ' copiado');
 
@@ -145,7 +128,7 @@ function actualizarFormato() { /* Actualiza solamente el texto del color.  */
 function randomHex() { /* crea un color aleatoreamente  */
   return '#' + Math.floor(Math.random() * 16777215) /* 16777215 es el número decimal de #ffffff */
     .toString(16) /* Math.random() genera un número entre 0 y 1, lo multiplicás por ese máximo y convertís a base 16. */
-    .padStart(6, '0');
+    .padStart(6, '0'); // "000005"
 }
 
 function getFormato() {
@@ -161,9 +144,9 @@ function formatearColor(hex) {
 
 /*  HEX → RGB */
 function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
+  const r = parseInt(hex.slice(1, 3), 16); // 00
+  const g = parseInt(hex.slice(3, 5), 16); //00
+  const b = parseInt(hex.slice(5, 7), 16); //05
   return `rgb(${r}, ${g}, ${b})`;
 }
 /* HEX → HSL */

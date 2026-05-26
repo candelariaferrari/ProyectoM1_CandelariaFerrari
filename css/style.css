@@ -12,22 +12,22 @@
   --surface: #ffffff;
   --border: #adada7;
   --accent: #e63946;
-  /* rojo fuerte */
   --accent-dim: #c1121f;
   --text: #1a1a1a;
   --muted: #9a9a8e;
-  /* border */
+
+  /* border radius */
   --border-s: 5px;
   --border-m: 10px;
   --border-l: 15px;
 
   /* padding / margin */
   --none: 0em;
-  --smal: 1em;
+  --small: 1em;
   --large: 1.5em;
   --xlarge: 2em;
 
-  /* Palete size */
+  /* Palette size */
   --palette-size-desktop: 6;
   --palette-size-mobile: 2;
 }
@@ -44,118 +44,119 @@ body {
   overflow-x: hidden;
 }
 
+/* ── WRAPPER ── */
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 280px;
-  /* contenido | sidebar */
   transition: grid-template-columns 0.3s ease;
   min-height: 100vh;
 }
 
 .wrapper.colapsado {
   grid-template-columns: 1fr 0px;
-  /* sidebar desaparece */
 }
 
+/* ── CONTENT ── */
 .content {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  /* evita overflow en grid */
   overflow: hidden;
-  /* recorta si el grid achica el contenido */
 }
 
+/* ── HEADER ── */
 header {
   padding: var(--xlarge);
-
-  span {
-    color: var(--accent);
-
-  }
-
-  p {
-    color: #9a9a8e;
-  }
 }
 
+header span {
+  color: var(--accent);
+}
+
+header p {
+  color: #9a9a8e;
+}
+
+/* ── MAIN ── */
 main {
   flex: 1;
-  /* ocupa todo el espacio disponible del heigth*/
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
 }
 
+/* ── CONTAINER CARDS ── */
 .container-cards {
   flex: 1;
   padding: var(--xlarge);
   display: grid;
   grid-template-columns: repeat(var(--palette-size-desktop), minmax(80px, 1fr));
-  /* ↑ usa la variable, con 6 como valor por defecto */
   grid-auto-rows: 1fr;
-  /* todas las filas del mismo alto */
-  gap: var(--smal);
+  gap: var(--small);
   align-items: stretch;
 }
 
+/* ── CARD COLOR ── */
 .card-color {
   border: 1px solid var(--border);
   border-radius: var(--border-l);
   overflow: hidden;
   min-height: 200px;
-  /* altura mínima garantizada */
   display: flex;
   flex-direction: column;
-
-  .color {
-    background-color: var(--accent);
-    height: 90%;
-    flex: 1;
-    /* el swatch ocupa todo el espacio disponible */
-    min-height: 150px;
-  }
-
-  .color-info {
-    padding: var(--smal);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .color-code {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text);
-      letter-spacing: .04em;
-    }
-
-    .copy-icon {
-      color: var(--muted);
-      font-size: 0.7rem;
-      transition: color .15s;
-    }
-
-
-  }
 }
 
+.card-color .color {
+  background-color: var(--accent);
+  flex: 1;
+  min-height: 150px;
+}
+
+.card-color .color-info {
+  padding: var(--small);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-color .color-info .color-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text);
+  letter-spacing: .04em;
+}
+
+.card-color .color-info .copy-icon {
+  color: var(--muted);
+  font-size: 0.7rem;
+  transition: color .15s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+button .copy-icon{
+  background-color: none;
+  border: none;
+}
 .color-info:hover .copy-icon {
   color: var(--accent);
 }
 
-/* toast */
+/* ── TOAST ── */
+
 .toast {
   position: fixed;
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%) translateY(80px);
   background: var(--accent);
-  color: var(--text);
+  color: #fff;
   font-family: 'DM Mono', monospace;
   font-size: .8rem;
   font-weight: 500;
-  padding: var(--smal);
+  padding: var(--small);
   border-radius: var(--large);
   opacity: 0;
   transition: transform .3s, opacity .3s;
@@ -168,7 +169,7 @@ main {
   transform: translateX(-50%) translateY(0);
 }
 
-/* SIDEBAR */
+/* ── SIDEBAR ── */
 .sidebar {
   overflow: hidden;
   display: flex;
@@ -187,9 +188,7 @@ main {
 .sidebar-header,
 .sidebar-content,
 .sidebar-footer {
-
   width: 220px;
-  /* ancho fijo para que no se deforme el contenido */
 }
 
 .wrapper.colapsado .sidebar-header,
@@ -199,20 +198,25 @@ main {
   pointer-events: none;
 }
 
-/* ── Botón toggle ── */
+.sidebar.colapsado .sidebar-header,
+.sidebar.colapsado .sidebar-content,
+.sidebar.colapsado .sidebar-footer {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── BOTÓN TOGGLE SIDEBAR ── */
 .btn-toggle-sidebar {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
   right: 280px;
-  /* Pegado al borde izquierdo del sidebar */
   width: 32px;
   height: 64px;
   border-radius: 8px 0 0 8px;
   border: 1px solid var(--border);
   border-right: none;
-  /* se fusiona visualmente con el sidebar */
   background: var(--surface);
   color: var(--text);
   font-size: 0.9rem;
@@ -229,7 +233,6 @@ main {
   color: var(--bg);
 }
 
-/* Cuando el sidebar está colapsado, el botón va al borde derecho */
 .btn-toggle-sidebar.colapsado {
   right: 0;
 }
@@ -239,14 +242,7 @@ main {
   display: none;
 }
 
-.sidebar.colapsado .sidebar-header,
-.sidebar.colapsado .sidebar-content,
-.sidebar.colapsado .sidebar-footer {
-  opacity: 0;
-  pointer-events: none;
-  /* evita clicks sobre contenido invisible */
-}
-
+/* ── FIELDSET Y GRUPOS ── */
 .toggle-group,
 .size-group {
   display: flex;
@@ -258,7 +254,7 @@ fieldset {
   border: var(--none);
 }
 
-/* Ocultás el input SIN usar display:none (display:none lo saca del foco del teclado, mal para accesibilidad) */
+/* Radio buttons accesibles */
 input[type="radio"] {
   position: absolute;
   opacity: 0;
@@ -266,7 +262,6 @@ input[type="radio"] {
   height: 0;
 }
 
-/* Estilizás el label como botón apagado */
 .toggle-group label,
 .size-group label {
   padding: 10px 20px;
@@ -279,21 +274,15 @@ input[type="radio"] {
   transition: all .15s;
 }
 
-/* Cuando el radio está seleccionado, estilizás su label */
-input[type="radio"]:checked+label,
-/* si label va DESPUÉS del input */
-label:has(input[type="radio"]:checked)
-
-/* si input va DENTRO del label  */
-  {
+/* Radio seleccionado */
+label:has(input[type="radio"]:checked) {
   background: var(--accent);
   border-color: var(--accent);
   color: #0d0d0f;
   font-weight: 700;
 }
 
-/* Foco visible para accesibilidad (navegación con teclado) */
-input[type="radio"]:focus-visible+label,
+/* Foco visible — accesibilidad */
 label:has(input[type="radio"]:focus-visible) {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -306,10 +295,10 @@ label:has(input[type="radio"]:focus-visible) {
   color: var(--text);
 }
 
-/* Generate button */
+/* ── BOTÓN GENERAR ── */
 .btn-generate {
   width: 100%;
-  padding: var(--smal);
+  padding: var(--small);
   background: var(--accent);
   border: var(--none);
   border-radius: var(--border-l);
@@ -322,7 +311,6 @@ label:has(input[type="radio"]:focus-visible) {
   cursor: pointer;
   transition: background .15s, transform .1s;
   margin-top: auto;
-
 }
 
 .btn-generate:hover {
@@ -334,44 +322,44 @@ label:has(input[type="radio"]:focus-visible) {
   transform: scale(.97);
 }
 
-/* Shortcut hint */
+/* ── SHORTCUT HINT ── */
 .shortcut-hint {
   text-align: center;
   font-family: 'DM Mono', monospace;
   font-size: .65rem;
   color: var(--muted);
   letter-spacing: 0.06em;
-  margin-top: var(--smal);
+  margin-top: var(--small);
 }
 
 kbd {
-  /* representa input de teclado  */
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 1px 5px;
   font-family: 'DM Mono', monospace;
 }
 
+/* ── FOOTER ── */
 footer {
-
-  padding: var(--smal);
+  padding: var(--small);
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    padding: var(--none);
-    margin: var(--none);
-    color: var(--muted);
-
-    span {
-      color: var(--accent);
-    }
-  }
 }
 
+footer p {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  padding: var(--none);
+  margin: var(--none);
+  color: var(--muted);
+}
+
+footer p span {
+  color: var(--accent);
+}
+
+/* ── RESPONSIVE MOBILE ── */
 @media (max-width: 768px) {
   .wrapper {
     display: flex;
@@ -412,14 +400,13 @@ footer {
     justify-content: space-between;
     align-items: flex-end;
     flex-wrap: wrap;
-    gap: var(--smal);
+    gap: var(--small);
     opacity: 0;
-    max-height: 0; 
+    max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease,
                 opacity 0.35s ease,
                 padding 0.35s ease;
-
   }
 
   .sidebar-content,
@@ -439,14 +426,12 @@ footer {
     border-bottom: 1px solid var(--border);
     box-shadow: -1px 6px 8px rgba(0, 0, 0, 0.08);
     margin-bottom: var(--large);
- /*   animation: fadeIn 0.15s ease forwards; */
- 
   }
+
   .sidebar.mobile-cerrando {
-/*    animation: fadeOut 0.3s ease forwards; */
-    max-height: 600px;   
+    max-height: 600px;
     padding: var(--large) var(--xlarge);
-    overflow: hidden;  
+    overflow: hidden;
   }
 
   .btn-mobile-toggle {
@@ -454,7 +439,7 @@ footer {
     justify-content: center;
     order: 2;
     width: 100%;
-    padding: var(--smal) var(--xlarge);
+    padding: var(--small) var(--xlarge);
     background: var(--surface);
     border-left: none;
     border-right: none;
@@ -468,10 +453,10 @@ footer {
     color: var(--text);
     cursor: pointer;
     transition: border-radius 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.2s ease;
+                box-shadow 0.2s ease;
   }
 
- .arrow {
+  .arrow {
     color: var(--accent);
     transition: transform 0.3s ease;
     font-size: 0.7rem;
@@ -480,24 +465,24 @@ footer {
 
   .btn-mobile-toggle.abierto .arrow {
     transform: rotate(180deg);
-  
-
   }
-  .btn-mobile-toggle.abierto{
-    border-radius: 0 ;
+
+  .btn-mobile-toggle.abierto {
+    border-radius: 0;
     border-bottom: none;
   }
+
   .container-cards {
     grid-template-columns: repeat(var(--palette-size-mobile), minmax(80px, 1fr));
-    padding: var(--smal);
+    padding: var(--small);
   }
 
   .btn-toggle-sidebar {
     display: none;
   }
-  .btn-generate {
 
-    margin-top: 0; 
+  .btn-generate {
+    margin-top: 0;
   }
 }
 
@@ -508,6 +493,7 @@ footer {
   }
 }
 
+/* ── ANIMACIONES ── */
 @keyframes slideDown {
   from {
     opacity: 0;
