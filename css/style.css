@@ -106,9 +106,10 @@ main {
   display: flex;
   flex-direction: column;
   animation:animacionCards 0.4s ease forwards;
-  opacity: 0; /* empieza invisible */
+  opacity: 0; 
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+  will-change: transform;
 }
 
 .card-color .color {
@@ -175,14 +176,14 @@ button .copy-icon {
 }
 
 .card-color:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) !important; /* Use !important para que pueda seguir utilizando la animacion de entrada y el hover */
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .card-color:hover .color-info {
   transform: translateY(0);
   background-color: var(--bg);
-}
+} 
 
 .card-color:hover .color-info .color-code {
   color: var(--accent);
