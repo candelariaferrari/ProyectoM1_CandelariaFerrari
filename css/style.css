@@ -119,12 +119,18 @@ main {
   padding: var(--small);
   display: flex;
   justify-content: space-between;
- min-height: 60px;      
-  align-items: flex-start;  
+  min-height: 100px;
+  align-items: flex-start;
   transform: translateY(4px);
   transition: transform 0.25s ease, background-color 0.25s ease;
 }
+.card-color .color-info span{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
 
+}
 .card-color .color-info .color-code {
   font-family: 'DM Mono', monospace;
   font-size: 0.7rem;
@@ -132,6 +138,7 @@ main {
   letter-spacing: .04em;
   transition: color 0.2s ease;
 }
+
 .card-color .color-info .color-code-hex {
   font-family: 'DM Mono', monospace;
   font-size: 0.7rem;
@@ -155,24 +162,30 @@ main {
   transform: scale(0.7);
   transition: opacity 0.2s ease, transform 0.2s ease, color 0.15s ease;
 }
-button .copy-icon{
+
+button .copy-icon {
   background-color: none;
   border: none;
 }
+
 .color-info:hover .copy-icon {
   color: var(--accent);
 }
+
 .card-color:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
+
 .card-color:hover .color-info {
   transform: translateY(0);
   background-color: var(--bg);
 }
+
 .card-color:hover .color-info .color-code {
   color: var(--accent);
 }
+
 .card-color:hover .copy-icon {
   opacity: 1;
   transform: scale(1);
@@ -370,13 +383,16 @@ footer p {
   margin: var(--none);
   color: var(--muted);
 }
+
 footer p span {
   color: var(--accent);
 }
-.footer-links{
+
+.footer-links {
   display: flex;
 
 }
+
 .footer-links a {
   font-family: 'DM Mono', monospace;
   font-size: 0.8rem;
@@ -387,6 +403,7 @@ footer p span {
   text-decoration: none;
   transition: all 0.3s ease;
 }
+
 .footer-links a::after {
   content: "";
   position: absolute;
@@ -394,14 +411,14 @@ footer p span {
   bottom: -4px;
   width: 0%;
   height: 2px;
-  background:var(--accent-dim);
+  background: var(--accent-dim);
   transition: width 0.3s ease;
   border-radius: 999px;
 }
 
 /* Hover */
 .footer-links a:hover {
- 
+
   color: var(--accent);
   transform: translateY(-1px);
 }
@@ -457,8 +474,8 @@ footer p span {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease,
-                opacity 0.35s ease,
-                padding 0.35s ease;
+      opacity 0.35s ease,
+      padding 0.35s ease;
   }
 
   .sidebar-content,
@@ -505,7 +522,7 @@ footer p span {
     color: var(--text);
     cursor: pointer;
     transition: border-radius 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.2s ease;
+      box-shadow 0.2s ease;
   }
 
   .arrow {
@@ -551,6 +568,7 @@ footer p span {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -558,11 +576,21 @@ footer p span {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
