@@ -5,29 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyecto M1 - Candelaria Ferrari</title>
-  <!-- Tipografias -->
   <link
     href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Mono:wght@300;400;500&amp;display=swap"
     rel="stylesheet">
-  <!-- css -->
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
   <div class="wrapper" id="wrapper">
-    <!-- Todo lo que se achica y agranda -->
     <div class="content">
       <header>
         <h1> Generador de paletas <span>Aleatorio</span>
         </h1>
         <p>By: Colorfly Studio</p>
       </header>
-
       <main>
-        <section class="container-cards" id="paletteGrid" aria-label="Paleta de colores generada"> <!-- Palets -->
+        <!-- Palets -->
+        <section class="container-cards" id="paletteGrid" aria-label="Paleta de colores generada"> 
 
         </section>
-
       </main>
       <footer>
         <p>Creado por <span>@candeferrari</span></p>
@@ -41,10 +37,6 @@
     </button>
     <button class="btn-toggle-sidebar" id="btnToggle" aria-label="Colapsar panel">›</button>
     <aside class="sidebar" id="sidebar">
-      <!--    <div class="sidebar-header">
-        <button class="btn-theme" id="btnTheme" aria-label="Cambiar tema">☀</button>
-      </div> -->
-
       <div class="sidebar-content">
         <fieldset>
           <legend>Formato:</legend>
@@ -53,10 +45,6 @@
               <input type="radio" name="formato" value="hex" checked />
               HEX
             </label>
-            <!--    <label>
-              <input type="radio" name="formato" value="rgb" />
-              RGB
-            </label> -->
             <label>
               <input type="radio" name="formato" value="hsl" />
               HSL

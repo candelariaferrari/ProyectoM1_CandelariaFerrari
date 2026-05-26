@@ -259,7 +259,6 @@ button .copy-icon{
   right: 0;
 }
 
-/* En desktop el botón mobile no existe */
 .btn-mobile-toggle {
   display: none;
 }
@@ -344,7 +343,6 @@ label:has(input[type="radio"]:focus-visible) {
   transform: scale(.97);
 }
 
-/* ── SHORTCUT HINT ── */
 .shortcut-hint {
   text-align: center;
   font-family: 'DM Mono', monospace;
